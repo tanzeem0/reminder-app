@@ -1,8 +1,10 @@
 package com.taskreminder.reminder_app;
 
 import com.taskreminder.reminder_app.services.ReminderService;
+import org.springframework.context.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +23,12 @@ public class ReminderAppApplication implements CommandLineRunner {
 
 	private final ReminderService reminderServiceEmail2;
 
+	@Autowired
+	private NotificationFormatter notificationFormatter;
+
+	@Autowired
+	private ApplicationContext context;
+
 	// Constructor Injection
 	public ReminderAppApplication(@Qualifier("inAppReminderService")ReminderService reminderService,
 								  @Qualifier("inAppReminderService")ReminderService reminderService2,
@@ -35,6 +43,7 @@ public class ReminderAppApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
 		SpringApplication.run(ReminderAppApplication.class, args);
+
 	}
 
 	@Override
@@ -43,5 +52,9 @@ public class ReminderAppApplication implements CommandLineRunner {
 //		reminderService.sendReminder("Hi Belal what is the update with the POC!");
 //		System.out.println("Example of prototype beans where inAppReminderService are two different beans compared with unique hashcode: " + (reminderServiceInApp.hashCode() == reminderServiceInApp2.hashCode()));
 //		System.out.println("Example of singleton beans where EmailReminderService are two same beans compared with unique hashcode: " + (reminderServiceEmail1.hashCode() == reminderServiceEmail2.hashCode()));
+
+		// Using Application Context to fetch a bean manually
+		MessageProvider messageProvider = context.getBean(MessageProvider.class);
+		reminderServiceEmail1.sendReminder(messageProvider.provideDefaultMessage());
 	}
 }
