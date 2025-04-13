@@ -25,7 +25,8 @@ public class ReminderAppApplication implements CommandLineRunner {
 	public ReminderAppApplication(@Qualifier("inAppReminderService")ReminderService reminderService,
 								  @Qualifier("inAppReminderService")ReminderService reminderService2,
 								  @Qualifier("emailReminderService") ReminderService reminderServiceEmail,
-								  @Qualifier("emailReminderService") ReminderService reminderServiceEmail2) {
+								  @Qualifier("emailReminderService") ReminderService reminderServiceEmail2
+								  ) {
         this.reminderServiceInApp = reminderService;
         this.reminderServiceInApp2 = reminderService2;
         this.reminderServiceEmail1 = reminderServiceEmail;
@@ -40,8 +41,7 @@ public class ReminderAppApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Reminder Application Running!!!");
 //		reminderService.sendReminder("Hi Belal what is the update with the POC!");
-		System.out.println("Example of prototype beans where inAppReminderService are two different beans compared with unique hashcode: " + (reminderServiceInApp.hashCode() == reminderServiceInApp2.hashCode()));
-		System.out.println("Example of singleton beans where EmailReminderService are two same beans compared with unique hashcode: " + (reminderServiceEmail1.hashCode() == reminderServiceEmail2.hashCode()));
-
+//		System.out.println("Example of prototype beans where inAppReminderService are two different beans compared with unique hashcode: " + (reminderServiceInApp.hashCode() == reminderServiceInApp2.hashCode()));
+//		System.out.println("Example of singleton beans where EmailReminderService are two same beans compared with unique hashcode: " + (reminderServiceEmail1.hashCode() == reminderServiceEmail2.hashCode()));
 	}
 }
